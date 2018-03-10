@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
+<th:block layout:fragment="content">
+
+<body>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="hospital:${hospitals}">
+                <td th:text="${hospital.name}"></td>
+                <td th:text="${hospital.address}"></td>
+                <td>
+                    <form method="post" th:action="@{'/hospitals/' + ${hospital.id} + '/delete'}">
+                     <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</th:block>
+</html>
