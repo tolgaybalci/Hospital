@@ -1,8 +1,10 @@
 package com.github.tolgaybalci.hospital.controller;
 
 import com.github.tolgaybalci.hospital.domain.Department;
+import com.github.tolgaybalci.hospital.domain.Doctor;
 import com.github.tolgaybalci.hospital.repository.DepartmentRepository;
-import com.github.tolgaybalci.hospital.repository.HospitalRepoitory;
+import com.github.tolgaybalci.hospital.repository.DoctorRepository;
+import com.github.tolgaybalci.hospital.repository.HospitalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,10 @@ public class DepartmentController {
     private DepartmentRepository departmentRepository;
 
     @Autowired
-    private HospitalRepoitory hospitalRepoitory;
+    private HospitalRepository hospitalRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
 
     @GetMapping("")
     public String getDepartmentList(Model model){
@@ -32,7 +37,7 @@ public class DepartmentController {
     @GetMapping("/new")
     public String getNewDepartment(Model model){
         model.addAttribute("department", new Department());
-        model.addAttribute("hospitals", hospitalRepoitory.findAll());
+        model.addAttribute("hospitals", hospitalRepository.findAll());
         return "departments/newDepartment";
     }
 
@@ -51,7 +56,7 @@ public class DepartmentController {
     public String getUpdateDepartment(@PathVariable Long id, Model model){
         if(departmentRepository.findById(id).isPresent()) {
             model.addAttribute("department", departmentRepository.findById(id).get());
-            model.addAttribute("hospitals", hospitalRepoitory.findAll());
+            model.addAttribute("hospitals", hospitalRepository.findAll());
             return "departments/updateDepartment";
         }
         else{
@@ -77,5 +82,24 @@ public class DepartmentController {
             departmentRepository.deleteById(id);
         }
         return "redirect:/departments";
+    }
+
+    @GetMapping("/{id}/doctoradd")
+    public String getAddDoctor(@PathVariable Long id, Model model){
+        model.addAttribute("doctor", new Doctor());
+        model.addAttribute("departmentId", id);
+        return "doctors/newDoctor";
+    }
+
+    @PostMapping("/{id}/doctoradd")
+    public String postAddDoctor(@PathVariable Long id, @Valid @ModelAttribute Doctor doctor, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "doctors/newDoctor";
+        }
+        else {
+            doctor.setDepartment(departmentRepository.findById(id).get());
+            doctorRepository.save(doctor);
+            return "redirect:/departments";
+        }
     }
 }
