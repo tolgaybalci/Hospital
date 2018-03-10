@@ -1,29 +1,38 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
 <th:block layout:fragment="content">
-
-<body>
-<div>
+  <div>
+    <div class="row">
+      <div class="col-1">
+        <a class="btn btn-primary" th:href="@{/hospitals/new}">New Hospital</a>
+      </div>
+    </div>
     <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="hospital:${hospitals}">
-                <td th:text="${hospital.name}"></td>
-                <td th:text="${hospital.address}"></td>
-                <td>
-                    <form method="post" th:action="@{'/hospitals/' + ${hospital.id} + '/delete'}">
-                     <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="hospital:${hospitals}">
+        <td th:text="${hospital.name}"></td>
+        <td th:text="${hospital.address}"></td>
+        <td>
+          <div>
+            <div>
+              <form method="post" th:action="@{'/hospitals/' + ${hospital.id} + '/delete'}">
+                <button class="btn btn-danger" type="submit">Delete</button>
+              </form>
+            </div>
+            <div>
+              <a class="btn btn-success" th:href="@{'/hospitals/' + ${hospital.id} + '/update'}">Update</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
     </table>
-</div>
-</body>
+  </div>
 </th:block>
 </html>
