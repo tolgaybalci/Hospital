@@ -1,0 +1,41 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
+<th:block layout:fragment="content">
+    <div>
+        <div class="row">
+            <div class="col-1">
+                <a class="btn btn-primary" th:href="@{/patients/new}">New Patient</a>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Birthdate</th>
+                <th>Gender</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="patient:${patients}">
+                <td th:text="${patient.name}"></td>
+                <td th:text="${patient.surname}"></td>
+                <td th:date="${patient.birthDate}"></td>
+                <td th:text="${patient.gender}"></td>
+                 <td>
+                    <div>
+                        <div>
+                            <form method="post" th:action="@{'/patients/' + ${patient.id} + '/delete'}">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                        <div>
+                            <a class="btn btn-success" th:href="@{'/patients/' + ${patient.id} + '/update'}">Update</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</th:block>
+</html>

@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+
+</head>
+<body>
+<div>
+    <form method="post" th:action="@{'/patients/' + ${patient.id} + '/update'}" th:object="${patient}">
+
+        <div class="form-group">
+            <label for="name">Patient Name</label>
+            <input class="form-control" type="text" id="name" th:field="*{name}" th:value="*{name}">
+        </div>
+
+        <div class="form-group">
+            <label for="surname">Patient Surname</label>
+            <input class="form-control" type="text" id="surname" th:field="*{surname}" th:value="*{surname}">
+        </div>
+
+        <div class="form-group">
+            <label for="birthDate">Patient Birthdate</label>
+            <input class="form-control" type="birthDate" id="birthDate" th:field="*{birthDate}" th:value="*{birthDate}">
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select class="form-control" id="gender" th:field="*{gender}" th:value="*{patient.gender}">
+                <option value="">Select Patient Gender</option>
+                <option
+                        th:each="patient :${patients}"
+                        th:value="${patient.gender}"
+                        th:text="${patient.gender}">
+                </option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Update Hospital</button>
+    </form>
+</div>
+</body>
+</html>
