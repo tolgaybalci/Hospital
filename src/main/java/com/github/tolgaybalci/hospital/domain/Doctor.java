@@ -24,7 +24,7 @@ public class Doctor extends BaseEntity {
     @ManyToOne
     private Department department;
 
-    @OneToMany
+    @OneToMany(mappedBy = "doctor")
     private List<Appoint> appoints;
 
 }

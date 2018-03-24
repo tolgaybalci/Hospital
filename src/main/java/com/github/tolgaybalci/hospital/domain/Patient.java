@@ -27,6 +27,6 @@ public class Patient extends BaseEntity{
 
     private Gender gender;
 
-    @OneToMany
+    @OneToMany(mappedBy = "patient")
     private List<Appoint> appoints;
 }
