@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
+
+<th:block layout:fragment=content>
+    <div>
+        <form method="post" th:action="@{/appoints/new}" th:object="${appoint}">
+            <div class="form-group">
+                <label for="date">Appoint Date</label>
+                <input class="form-control" id="date" type="date" th:field="*{date}">
+            </div>
+
+            <div class="form-group">
+                <label for="doctor">Doctor</label>
+                <select class="form-control" id="doctor" th:field="*{doctor}" required>
+                    <option value="">Select Doctor</option>
+                    <option
+                            th:each="doctor :${doctors}"
+                            th:value="${doctor.id}"
+                            th:text="${doctor.name}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="patient">Patient</label>
+                <select class="form-control" id="patient" th:field="*{patient}" required>
+                    <option value="">Select Patient</option>
+                    <option
+                            th:each="patient :${patients}"
+                            th:value="${patient.id}"
+                            th:text="${patient.name}">
+                    </option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary">Create</button>
+        </form>
+    </div>
+</th:block>
+
+</html>

@@ -2,11 +2,13 @@ package com.github.tolgaybalci.hospital.controller;
 
 import com.github.tolgaybalci.hospital.domain.Patient;
 import com.github.tolgaybalci.hospital.repository.PatientRepository;
+import com.github.tolgaybalci.hospital.validator.PatientValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +20,11 @@ public class PatientController {
 
     @Autowired
     private PatientRepository patientRepository;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder){
+        binder.setValidator(new PatientValidator());
+    }
 
     @GetMapping("")
     public String getPatientList(Model model){

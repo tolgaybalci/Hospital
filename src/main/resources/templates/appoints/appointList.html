@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
+<th:block layout:fragment="content">
+    <div>
+        <div class="row">
+            <div class="col-1">
+                <a class="btn btn-primary" th:href="@{/patients/new}">New Patient</a>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:text="#{common.name}"></th>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Patient</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="appoint: ${appoints}">
+                <td th:text="${appoint.date}"></td>
+                <td th:text="${appoint.doctor.name}"></td>
+                <td th:text="${appoint.patient.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</th:block>
+</html>
